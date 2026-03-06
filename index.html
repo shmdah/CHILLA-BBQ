@@ -43,6 +43,7 @@
         /* --- VIEWS --- */
         nav { height: 60px; padding-top: max(10px, env(safe-area-inset-top)); z-index: 100; transition: background-color 0.3s, box-shadow 0.3s, color 0.3s; }
         @media (min-width: 768px) { nav { height: 70px; } }
+        nav.scrolled { background: rgba(255, 251, 240, 0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
         
         main { flex: 1; display: flex; flex-direction: column; }
         .page { display: none; flex-direction: column; flex: 1; padding-top: 60px; opacity: 0; transition: opacity 0.3s ease; position: relative; z-index: 10; }
@@ -60,11 +61,11 @@
         .btn-primary:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(233, 30, 99, 0.3); }
         
         .cat-pill { white-space: nowrap; padding: 6px 16px; border-radius: 99px; font-size: 11px; font-weight: 700; border: 1px solid rgba(0,0,0,0.1); color: #57534e; transition: all 0.2s; cursor: pointer; background: white; }
-        @media (min-width: 768px) { .cat-pill { padding: 10px 24px; font-size: 13px; } }
+        @media (min-width: 768px) { .cat-pill { padding: 10px 24px; font-size: 14px; } }
         .cat-active { background: #e91e63; color: white; border-color: #e91e63; box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3); }
         
         /* --- MELON CARDS (Promotional Categories) --- */
-        .melon-card { position: relative; border-radius: 28px; padding: 24px; height: 180px; display: flex; flex-direction: column; justify-content: center; overflow: visible; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
+        .melon-card { position: relative; border-radius: 28px; padding: 24px; height: 180px; display: flex; flex-direction: column; justify-content: center; overflow: visible; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
         .melon-card.bg-burger { background: linear-gradient(135deg, #b45309, #78350f); }
         .melon-card.bg-shawarma { background: linear-gradient(135deg, #d97706, #92400e); }
         .melon-card.bg-sides { background: linear-gradient(135deg, #15803d, #064e3b); }
@@ -73,14 +74,15 @@
         
         /* Desktop Hover Enhancement */
         @media (min-width: 768px) {
+            .melon-card { height: 220px; }
             .melon-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 20; }
             .melon-card:hover .melon-img { transform: translateY(-50%) scale(1.15) rotate(-3deg); right: -2%; }
         }
 
         /* Mobile Adjustments (Compact & Images Centered) & Force Hover Class */
         @media (max-width: 768px) { 
-            .melon-card { height: 120px; padding: 16px; border-radius: 20px; } 
-            .melon-img { right: 0%; height: 130%; } 
+            .melon-card { height: 130px; padding: 16px; border-radius: 20px; } 
+            .melon-img { right: 0%; height: 140%; } 
             h1.text-5xl { font-size: 2.25rem; }
         }
         /* Mobile Tap Effect */
@@ -89,7 +91,6 @@
 
         /* --- CART HONEY --- */
         .cart-icon-wrapper { position: relative; cursor: pointer; transition: transform 0.2s; color: #1c1917; }
-        nav.text-white .cart-icon-wrapper { color: white; }
         .cart-icon-wrapper:active { transform: scale(0.9); }
         .cart-badge { position: absolute; top: -4px; right: -6px; background-color: #f59e0b; color: white; font-size: 9px; font-weight: 900; height: 16px; width: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid #fffbf0; }
         .cart-badge.visible { opacity: 1; transform: scale(1); }
@@ -119,14 +120,8 @@
 
         /* --- LOADER --- */
         #loader { position: fixed; inset: 0; background: #ffffff; z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s ease; }
-        .spinner { width: 40px; height: 40px; border: 3px solid rgba(0,0,0,0.1); border-top-color: #e91e63; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: #e91e63; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- WAVY DIVIDER --- */
-        .wave-divider { position: absolute; bottom: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); }
-        .wave-divider svg { position: relative; display: block; width: calc(100% + 1.3px); height: 30px; }
-        .wave-divider .shape-fill { fill: #fffbf0; }
-        @media (min-width: 768px) { .wave-divider svg { height: 60px; } }
 
         /* --- TABS --- */
         .tab-btn { padding: 10px 16px; font-size: 12px; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; transition: all 0.3s; white-space: nowrap; }
@@ -149,26 +144,19 @@
     <div id="loader"><div class="spinner"></div></div>
     <div id="toast"><i class="fas fa-check-circle"></i> <span id="toast-msg">Added to Cart</span></div>
     <div id="filter-overlay" class="fixed inset-0 bg-black/70 z-[99] opacity-0 pointer-events-none transition-opacity" onclick="toggleFilters()"></div>
-    
-    <div id="bg-container" class="fixed inset-0 z-0">
-        <div class="absolute inset-0 bg-black/80 z-10"></div>
-        <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-60">
-            <source src="images/iphone17(review).mp4" type="video/mp4">
-        </video>
-    </div>
 
-    <nav id="navbar" class="fixed top-0 w-full flex justify-between items-center px-4 md:px-8 text-white">
+    <nav id="navbar" class="fixed top-0 w-full flex justify-between items-center px-4 md:px-8 text-stone-800 bg-cream-50 border-b border-black/5 shadow-sm">
         <div class="text-xl md:text-2xl font-display font-black tracking-tighter cursor-pointer flex items-center gap-2" onclick="showPage('home')">
             <i class="fas fa-fire text-brand-500"></i> SHILLA<span class="text-brand-500"> BBQ</span>
         </div>
         
-        <div class="hidden md:flex gap-8 text-sm font-bold tracking-wider">
+        <div class="hidden md:flex gap-8 text-sm font-bold tracking-wider text-stone-600">
             <button onclick="showPage('home')" class="hover:text-brand-500 transition nav-link">HOME</button>
             <button onclick="showPage('catalog')" class="hover:text-brand-500 transition nav-link">MENU</button>
             <button onclick="showPage('contact-page')" class="hover:text-brand-500 transition nav-link">CONTACT</button>
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 text-stone-800">
             <button onclick="openCart()" class="text-lg md:text-xl p-2 cart-icon-wrapper" id="cart-icon">
                 <i class="fas fa-shopping-cart"></i><div id="cart-badge" class="cart-badge">0</div>
             </button>
@@ -187,50 +175,24 @@
         </div>
         
         <div class="mt-auto flex flex-col items-start gap-5 w-full">
-            <a href="https://www.instagram.com/iphone__hub_ke?igsh=MWtndmpkcTZkZWgzNQ==" target="_blank" class="text-3xl text-brand-500 hover:text-brand-400 transition-transform active:scale-95">
-                <i class="fab fa-instagram"></i>
-            </a>
             <button onclick="toggleMobileMenu()" class="text-[10px] text-stone-500 border border-gray-200 px-6 py-2 rounded-full font-bold w-full text-center active:bg-gray-100">CLOSE</button>
         </div>
     </div>
 
     <main class="z-10 relative flex-1 flex flex-col">
 
-        <section id="home" class="page active pt-0">
-            <div class="relative bg-dark-900 pt-24 pb-20 md:pt-28 md:pb-32 px-4 flex flex-col items-center justify-center min-h-[60vh] md:min-h-[70vh]">
-                <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 32px 32px;"></div>
-                
-                <div class="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center">
-                    <span class="inline-block border border-brand-500 text-brand-400 text-[9px] md:text-xs font-black uppercase tracking-[0.3em] px-3 py-1 md:px-4 md:py-1.5 rounded-full mb-4 md:mb-6">Always Fresh</span>
-                    
-                    <h1 class="text-5xl md:text-8xl lg:text-9xl font-display font-black mb-3 md:mb-4 tracking-tighter leading-none text-white drop-shadow-2xl">
-                        BBQ & <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-500">BURGER</span>
-                    </h1>
-                    
-                    <p class="text-gray-300 text-xs md:text-lg max-w-sm md:max-w-lg mx-auto mb-6 md:mb-8 font-medium leading-relaxed">Handcrafted meals made with premium ingredients. Delivered hot to your door in minutes.</p>
-                    
-                    <button onclick="showPage('catalog')" class="btn-primary px-8 py-3 md:px-10 md:py-4 rounded-full font-black tracking-widest text-xs md:text-base uppercase flex items-center gap-2 md:gap-3">
-                        Order Now <i class="fas fa-arrow-right"></i>
-                    </button>
+        <section id="home" class="page active bg-cream-50 pt-20">
+            <div class="max-w-7xl mx-auto w-full px-4 md:px-8 py-8 md:py-16">
+                <div class="text-center mb-8 md:mb-12">
+                    <h2 class="text-3xl md:text-5xl font-display font-black text-stone-800">CRAVING SOMETHING?</h2>
+                    <p class="text-stone-500 font-medium text-sm mt-2">Select a category below to explore.</p>
                 </div>
 
-                <div class="wave-divider">
-                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="max-w-7xl mx-auto w-full px-3 md:px-8 py-10 md:py-20">
-                <div class="text-center mb-6 md:mb-10">
-                    <h2 class="text-2xl md:text-4xl font-display font-black text-stone-800">CRAVING SOMETHING?</h2>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
                     
                     <div onclick="handleMelonTap('Burger', this)" class="melon-card bg-burger group">
                         <div class="relative z-10 w-[60%] md:w-2/3">
-                            <h3 class="text-xl md:text-3xl font-display font-black text-white mb-1 md:mb-2 leading-tight">Gourmet<br>Burgers</h3>
+                            <h3 class="text-2xl md:text-3xl font-display font-black text-white mb-1 md:mb-2 leading-tight">Gourmet<br>Burgers</h3>
                             <span class="text-[10px] md:text-xs font-bold text-white/80 group-hover:text-white transition flex items-center gap-1.5 md:gap-2">View Menu <i class="fas fa-arrow-right text-[9px] md:text-xs"></i></span>
                         </div>
                         <img src="images/burgerhm.png" class="melon-img">
@@ -238,7 +200,7 @@
 
                     <div onclick="handleMelonTap('Shawarma', this)" class="melon-card bg-shawarma group">
                         <div class="relative z-10 w-[60%] md:w-2/3">
-                            <h3 class="text-xl md:text-3xl font-display font-black text-white mb-1 md:mb-2 leading-tight">Signature<br>Shawarma</h3>
+                            <h3 class="text-2xl md:text-3xl font-display font-black text-white mb-1 md:mb-2 leading-tight">Signature<br>Shawarma</h3>
                             <span class="text-[10px] md:text-xs font-bold text-white/80 group-hover:text-white transition flex items-center gap-1.5 md:gap-2">View Menu <i class="fas fa-arrow-right text-[9px] md:text-xs"></i></span>
                         </div>
                         <img src="images/shawarmamenu.png" class="melon-img">
@@ -246,7 +208,7 @@
 
                     <div onclick="handleMelonTap('Side', this)" class="melon-card bg-sides group">
                         <div class="relative z-10 w-[60%] md:w-2/3">
-                            <h3 class="text-xl md:text-3xl font-display font-black text-white mb-1 md:mb-2 leading-tight">Crispy<br>Sides</h3>
+                            <h3 class="text-2xl md:text-3xl font-display font-black text-white mb-1 md:mb-2 leading-tight">Crispy<br>Sides</h3>
                             <span class="text-[10px] md:text-xs font-bold text-white/80 group-hover:text-white transition flex items-center gap-1.5 md:gap-2">View Menu <i class="fas fa-arrow-right text-[9px] md:text-xs"></i></span>
                         </div>
                         <img src="images/frieshm.png" class="melon-img">
@@ -266,12 +228,12 @@
         <section id="catalog" class="page bg-cream-50">
             <div class="max-w-7xl mx-auto w-full flex flex-col h-full">
                 
-                <div class="px-3 md:px-8 py-3 md:py-4 z-20 bg-cream-50 border-b border-black/5 flex flex-col gap-2 md:gap-4 shadow-sm">
+                <div class="px-4 md:px-8 py-4 z-20 sticky top-[60px] md:top-[70px] bg-cream-50 flex flex-col gap-2 md:gap-4 border-b border-black/5 shadow-sm">
                     <div class="flex items-center gap-3">
                         <button onclick="showPage('home')" class="text-[10px] md:text-xs font-bold text-stone-500 flex items-center hover:text-brand-500 transition w-fit">
                             <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white shadow-sm flex items-center justify-center mr-1.5 md:mr-2"><i class="fas fa-arrow-left text-[9px] md:text-xs"></i></div> Back
                         </button>
-                        <h2 class="text-lg md:text-3xl font-display font-black uppercase text-stone-800 m-0 leading-none">Our Menu</h2>
+                        <h2 class="text-xl md:text-3xl font-display font-black uppercase text-stone-800 m-0 leading-none">Our Menu</h2>
                     </div>
                     
                     <div class="flex flex-col lg:flex-row gap-3 lg:gap-4 justify-between items-start lg:items-center mt-1">
@@ -310,7 +272,7 @@
                         <button onclick="clearFilters()" class="w-full py-2 rounded-lg border border-gray-300 text-xs font-bold hover:bg-gray-100 transition text-stone-900">Clear All</button>
                     </aside>
 
-                    <div class="flex-1 pb-10 pt-4 md:pt-6 px-3 md:px-8 flex flex-col h-full overflow-y-auto">
+                    <div class="flex-1 pb-10 pt-4 md:pt-6 px-4 md:px-8 flex flex-col h-full overflow-y-auto">
                         <div class="product-grid mb-8" id="grid-container">
                             </div>
                         
@@ -402,6 +364,13 @@
                                 <i class="fas fa-exchange-alt"></i> <span>COMPARE</span>
                             </button>
                         </div>
+                    </div>
+                </div>
+
+                <div class="glass rounded-2xl md:rounded-3xl p-5 md:p-10 mb-8 md:mb-12">
+                    <h3 class="text-sm md:text-lg font-black uppercase tracking-wider mb-4 md:mb-6 text-stone-900 border-b border-gray-200 pb-3 md:pb-4">Tech Specs</h3>
+                    <div id="tab-specs" class="tab-content active">
+                        <table class="specs-table text-stone-800" id="specs-table"></table>
                     </div>
                 </div>
                 
@@ -552,27 +521,6 @@
     </div>
 
     <script>
-        // --- NAVBAR SCROLL LOGIC ---
-        function updateNavBackground() {
-            const nav = document.getElementById('navbar');
-            const homeActive = document.getElementById('home').classList.contains('active');
-            
-            if (homeActive && window.scrollY < 20) {
-                nav.style.backgroundColor = 'transparent';
-                nav.style.boxShadow = 'none';
-                nav.style.borderBottomColor = 'transparent';
-                nav.classList.remove('text-stone-800');
-                nav.classList.add('text-white');
-            } else {
-                nav.style.backgroundColor = '#fffbf0';
-                nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.05)';
-                nav.style.borderBottomColor = 'rgba(0,0,0,0.05)';
-                nav.classList.remove('text-white');
-                nav.classList.add('text-stone-800');
-            }
-        }
-        window.addEventListener('scroll', updateNavBackground);
-
         // --- LOCAL DATABASE (FOOD) ---
         const products = [
             { 
@@ -658,8 +606,8 @@
         let currentSelection = { product: null, size: '', addon: 'No Drink', finalPrice: 0 };
         let activeCategoryFilter = 'all';
         
-        let cart = JSON.parse(localStorage.getItem('shilla_cart_final')) || [];
-        let compareList = JSON.parse(localStorage.getItem('shilla_compare_final')) || [];
+        let cart = JSON.parse(localStorage.getItem('shilla_cart_final_v2')) || [];
+        let compareList = JSON.parse(localStorage.getItem('shilla_compare_final_v2')) || [];
 
         // --- DYNAMIC FOMO LOGIC (Viewers & Timer) ---
         let fomoSeconds = 12 * 3600 - 1; // 11 hours, 59 mins, 59 secs
@@ -673,15 +621,13 @@
             
             if (viewersEl && fomoBanner && !fomoBanner.classList.contains('hidden')) {
                 currentViewers += viewerDeltas[deltaIndex];
-                
-                // Keep it grounded between 1 and 22 as requested
                 if(currentViewers < 1) currentViewers = Math.floor(Math.random() * 5) + 5;
                 if(currentViewers > 24) currentViewers = Math.floor(Math.random() * 8) + 12;
                 
                 viewersEl.innerText = currentViewers;
                 deltaIndex = (deltaIndex + 1) % viewerDeltas.length;
             }
-        }, 3000); // Change viewers every 3 seconds
+        }, 3000); 
 
         setInterval(() => {
             const timerEl = document.getElementById('fomo-h');
@@ -698,14 +644,13 @@
                 
                 if (fomoSeconds > 0) fomoSeconds--;
             }
-        }, 1000); // Tick every second
+        }, 1000);
 
         // --- INIT ---
         document.addEventListener("DOMContentLoaded", () => {
             renderGrid(); 
             updateCartUI(); 
             updateCompareUI(); 
-            updateNavBackground();
             
             setTimeout(() => {
                 const loader = document.getElementById('loader');
@@ -733,13 +678,7 @@
             
             setTimeout(() => {
                 target.classList.add('active'); 
-                updateNavBackground(); // Force nav update when page changes instantly
             }, 10);
-            
-            const vidContainer = document.getElementById('bg-container');
-            if (vidContainer) {
-                vidContainer.style.display = (id === 'home') ? 'block' : 'none';
-            }
             
             window.scrollTo(0,0);
             
@@ -771,7 +710,7 @@
             setTimeout(() => {
                 element.classList.remove('melon-force-hover');
                 filterFromHome(cat);
-            }, 250);
+            }, 3000); // 3 Second pause to admire hover effect before navigation
         }
 
         // --- CATEGORY FILTERS ---
@@ -879,7 +818,7 @@
                 compareBtn.querySelector('i').className = inCompare ? "fas fa-check text-brand-600" : "fas fa-exchange-alt text-stone-700";
             }
             
-            if (p.id === 'ip17' || p.type === 'Burger') { // Show FOMO on Burger for demonstration or specific products
+            if (p.type === 'Burger') { 
                 document.getElementById('fomo-banner').classList.remove('hidden');
             } else {
                 document.getElementById('fomo-banner').classList.add('hidden');
@@ -965,7 +904,7 @@
                 cart.push(item); 
             }
             
-            localStorage.setItem('shilla_cart_final', JSON.stringify(cart)); 
+            localStorage.setItem('shilla_cart_final_v2', JSON.stringify(cart)); 
             updateCartUI(); 
             showToast("Added to Cart"); 
             
@@ -982,20 +921,20 @@
             if (item.qty <= 0) {
                 cart = cart.filter(i => i.cartId !== cartId);
             }
-            localStorage.setItem('shilla_cart_final', JSON.stringify(cart)); 
+            localStorage.setItem('shilla_cart_final_v2', JSON.stringify(cart)); 
             updateCartUI(); 
         }
 
         function removeFromCart(cartId) { 
             cart = cart.filter(item => item.cartId !== cartId); 
-            localStorage.setItem('shilla_cart_final', JSON.stringify(cart)); 
+            localStorage.setItem('shilla_cart_final_v2', JSON.stringify(cart)); 
             updateCartUI(); 
         }
 
         function clearCart() { 
             if(confirm("Clear all items from your cart?")) { 
                 cart = []; 
-                localStorage.setItem('shilla_cart_final', JSON.stringify(cart)); 
+                localStorage.setItem('shilla_cart_final_v2', JSON.stringify(cart)); 
                 updateCartUI(); 
             } 
         }
@@ -1078,7 +1017,7 @@
 
             let total = 0; 
             let msg = '🔥 *SHILLA BBQ: NEW ORDER*\n\n'; 
-            cart.forEach((item) => { 
+            cart.forEach((item, index) => { 
                 total += (item.price * item.qty); 
                 msg += `▪️ ${item.qty}x ${getEmoji(item.type)} ${item.name} (${item.size})\n`;
                 if(item.addon !== 'No Drink') msg += `   + ${item.addon}\n`;
@@ -1111,9 +1050,8 @@
                 showToast("Added to Compare");
             } 
             
-            localStorage.setItem('shilla_compare_final', JSON.stringify(compareList)); 
+            localStorage.setItem('shilla_compare_final_v2', JSON.stringify(compareList)); 
             
-            // If on product detail page, update the big button
             if (currentSelection.product && currentSelection.product.id === productId) {
                 const inCompare = compareList.includes(productId);
                 const compareBtn = document.getElementById('detail-compare-btn');
@@ -1134,7 +1072,6 @@
             const compareThumbs = document.getElementById('compare-thumbs'); 
             const clearBtn = document.getElementById('clear-compare-btn');
             
-            // Mobile elements
             const mobPopup = document.getElementById('mobile-compare-popup');
             const mobCount = document.getElementById('mobile-compare-count');
             
@@ -1142,11 +1079,9 @@
             if (mobCount) mobCount.innerText = `${compareList.length}/2 Selected`;
             
             if (compareList.length > 0) { 
-                // Desktop Bar
                 if (compareBar) compareBar.classList.add('open'); 
                 if (clearBtn) clearBtn.classList.remove('hidden');
                 
-                // Mobile Popup
                 if (mobPopup) {
                     mobPopup.classList.remove('translate-y-[150%]');
                     mobPopup.classList.add('translate-y-0');
@@ -1177,9 +1112,8 @@
 
         function clearCompare() { 
             compareList = []; 
-            localStorage.setItem('shilla_compare_final', JSON.stringify(compareList)); 
+            localStorage.setItem('shilla_compare_final_v2', JSON.stringify(compareList)); 
             
-            // Reset detail page button if active
             const compareBtn = document.getElementById('detail-compare-btn');
             if (compareBtn) {
                 compareBtn.querySelector('span').innerText = "COMPARE";
@@ -1222,7 +1156,6 @@
             });
             html += `</div>`;
 
-            // Specs Section
             const allSpecKeys = new Set();
             compareProducts.forEach(p => {
                 if(p.fullSpecs) Object.keys(p.fullSpecs).forEach(k => allSpecKeys.add(k));
